@@ -30,24 +30,54 @@ $(function() {
 
   $('.tower').droppable({
     drop: function(ev, ui) {
-        $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
+      var numDiscs = this.children.length,
+          height = 0;
+      console.log(this);
+      if (numDiscs) {
+        height = numDiscs*20 + 'px';
+      }
+      $(ui.draggable).detach().css({bottom: height, left: '0%'}).appendTo(this);
+
     }
   });
 
 
   $(".disc").draggable({
       revert : function(event, ui) {
-
-          console.log(event);
-
           $(this).data("uiDraggable").originalPosition = {
-              top : 0,
-              left : 0
+              bottom : 0,
+              left: 0
           };
-
           return !event;
       }
   });
 
+  $('body').on('mousedown', '.disc', function() {
+    var discSize = $(this).attr('id'),
+        towers = $('.tower');
+
+    console.log('picked up a ' + discSize);
+
+    for (var i=0; i< towers.length; i++) {
+      if (towers[i].children) {
+        var towerChildren = towers[i].children.length,
+            towerCapacity = $(towers[i].children[towerChildren-1]).attr('id');
+
+        console.log("tower " + i + " -- " + towerCapacity );
+        if (parseInt(towerCapacity) < parseInt(discSize)) {
+          $(towers[i]).droppable('disable');
+        }
+      }
+    }
+  });
+
+  $('body').on('mouseup', '.disc', function() {
+    setTimeout(function() {
+      var towers = $('.tower');
+      for (var i=0; i<towers.length; i++) {
+        $(towers[i]).droppable('enable');
+      }
+    }, 100);
+  });
 
 });
