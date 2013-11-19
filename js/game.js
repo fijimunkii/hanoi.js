@@ -43,29 +43,55 @@ $(function() {
 
 
   $(".disc").draggable({
-      revert : function(event, ui) {
+      start : function(event, ui) {
+        startPos = ui.helper.position();
+        console.log(startPos);
+      },
+      revert: function(event, ui) {
           $(this).data("uiDraggable").originalPosition = {
-              bottom : 0,
+              top : startPos.top,
               left: 0
           };
           return !event;
       }
   });
 
+  function onlyEnableTopDiscs() {
+
+    var $discs = $('.disc');
+        for (var i=0; i<$discs.length; i++) {
+          $($discs[i]).draggable('disable');
+    }
+
+    var leftLength = $('.left')[0].children.length - 1,
+        topLeft = $('.left')[0].children[leftLength];
+    $(topLeft).draggable('enable');
+
+    var middleLength = $('.middle')[0].children.length - 1,
+        topMiddle = $('.middle')[0].children[middleLength];
+    $(topMiddle).draggable('enable');
+
+    var rightLength = $('.right')[0].children.length - 1,
+        topRight = $('.right')[0].children[0];
+    $(topRight).draggable('enable');
+
+  }
+
+  onlyEnableTopDiscs();
+
+
   $('body').on('mousedown', '.disc', function() {
     var discSize = $(this).attr('id'),
-        towers = $('.tower');
+        $towers = $('.tower');
 
-    console.log('picked up a ' + discSize);
-
-    for (var i=0; i< towers.length; i++) {
-      if (towers[i].children) {
-        var towerChildren = towers[i].children.length,
-            towerCapacity = $(towers[i].children[towerChildren-1]).attr('id');
+    for (var i=0; i< $towers.length; i++) {
+      if ($towers[i].children) {
+        var towerChildren = $towers[i].children.length,
+            towerCapacity = $($towers[i].children[towerChildren-1]).attr('id');
 
         console.log("tower " + i + " -- " + towerCapacity );
         if (parseInt(towerCapacity) < parseInt(discSize)) {
-          $(towers[i]).droppable('disable');
+          $($towers[i]).droppable('disable');
         }
       }
     }
@@ -73,11 +99,15 @@ $(function() {
 
   $('body').on('mouseup', '.disc', function() {
     setTimeout(function() {
-      var towers = $('.tower');
-      for (var i=0; i<towers.length; i++) {
-        $(towers[i]).droppable('enable');
+
+      var $towers = $('.tower');
+      for (var i=0; i<$towers.length; i++) {
+        $($towers[i]).droppable('enable');
       }
-    }, 100);
+
+      onlyEnableTopDiscs();
+
+    }, 200);
   });
 
 });
