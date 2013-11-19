@@ -54,7 +54,10 @@ $(function() {
           };
           return !event;
       }
+
   });
+
+
 
   function onlyEnableTopDiscs() {
 
