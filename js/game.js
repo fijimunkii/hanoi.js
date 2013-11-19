@@ -31,22 +31,38 @@ $(function() {
   // Init tower droppable ability
   $('.tower').droppable({
     drop: function(ev, ui) {
+      $(ev['target']).removeClass('tower-focus');
+
       var numDiscs = ev['target'].children.length,
           height = 0;
           console.log(numDiscs);
       if (numDiscs) {
         height = (numDiscs*20) + 'px';
       }
-      console.log(height);
       $(ui.draggable).detach().css({top: '', bottom: height, left: '0%'}).appendTo(this);
-    }
+    },
+    over: function(ev, ui) {
+      $(ev['target']).addClass('tower-focus');
+    },
+    out: function(ev, ui) {
+      $(ev['target']).removeClass('tower-focus');
+    },
+    tolerance: 'touch'
   });
 
   // Init disc draggable ability
   $(".disc").draggable({
-      start : function(event, ui) {
+      start: function(event, ui) {
         startPos = ui.helper.position();
         console.log(startPos);
+        $(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left + 88);
+        $(ui.helper).css("left", '');
+        $(ui.helper).css("right", '');
+      },
+      stop: function(event, ui) {
+        $(ui.helper).css("margin-left", "");
+        $(ui.helper).css("left", '0%');
+        $(ui.helper).css("right", '0%');
       },
       revert: function(event, ui) {
           $(this).data("uiDraggable").originalPosition = {

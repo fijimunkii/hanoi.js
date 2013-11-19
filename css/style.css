@@ -5,10 +5,19 @@
   margin: 10px;
   background: green;
   position: relative;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+.tower-focus {
+  background: #1AFF00;
 }
 
 .disc {
-  background: yellow;
   height: 20px;
   margin: 0 auto;
   border: 1px solid green;
@@ -16,44 +25,60 @@
   left: 0%;
   right: 0%;
   z-index: 1;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 .disc1 {
   width: 20px;
+  background: yellow;
 }
 
 .disc2 {
   width: 40px;
+  background: orange;
 }
 
 .disc3 {
   width: 60px;
+  background: yellow;
 }
 
 .disc4 {
   width: 80px;
+  background: orange;
 }
 
 .disc5 {
   width: 100px;
+  background: yellow;
 }
 
 .disc6 {
   width: 120px;
+  background: orange;
 }
 
 .disc7 {
   width: 140px;
+  background: yellow;
 }
 
 .disc8 {
   width: 160px;
+  background: orange;
 }
 
 .disc9 {
   width: 180px;
+  background: yellow;
 }
 
 .disc10 {
   width: 200px;
+  background: orange;
 }
