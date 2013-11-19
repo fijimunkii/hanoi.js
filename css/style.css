@@ -1,0 +1,58 @@
+.tower {
+  width: 202px;
+  height: 222px;
+  float: left;
+  margin: 10px;
+  background: green;
+  position: relative;
+}
+
+.disc {
+  background: yellow;
+  height: 20px;
+  margin: 0 auto;
+  border: 1px solid green;
+  position: absolute;
+  left: 0%;
+  right: 0%;
+}
+
+.disc1 {
+  width: 20px;
+}
+
+.disc2 {
+  width: 40px;
+}
+
+.disc3 {
+  width: 60px;
+}
+
+.disc4 {
+  width: 80px;
+}
+
+.disc5 {
+  width: 100px;
+}
+
+.disc6 {
+  width: 120px;
+}
+
+.disc7 {
+  width: 140px;
+}
+
+.disc8 {
+  width: 160px;
+}
+
+.disc9 {
+  width: 180px;
+}
+
+.disc10 {
+  width: 200px;
+}
