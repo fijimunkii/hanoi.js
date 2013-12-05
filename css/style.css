@@ -1,3 +1,14 @@
+body {
+  background-image:url(../images/bequia.JPG);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#game-container {
+  width: 670px;
+  margin: 0 auto;
+}
+
 .tower {
   width: 202px;
   height: 222px;
