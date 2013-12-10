@@ -32,10 +32,13 @@ $(function() {
   $('.tower').droppable({
     drop: function(ev, ui) {
       $(ev['target']).removeClass('tower-focus');
-
       var numDiscs = ev['target'].children.length,
           height = 0;
           console.log(numDiscs);
+
+      if (ev.target == ev.target.previousSibling || !ev.target.previousSibling) {
+        numDiscs -= 1;
+      }
       if (numDiscs) {
         height = (numDiscs*20) + 'px';
       }
