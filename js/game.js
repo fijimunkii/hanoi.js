@@ -1,34 +1,36 @@
 $(function() {
 
   // Make the towers
-  var $left = $('<div>');
-  $left.addClass('left');
-  $left.addClass('tower');
-  $('#game-container').append($left);
+  var $gameContainer = $('#game-container'),
 
-  var $middle = $('<div>');
-  $middle.addClass('middle');
-  $middle.addClass('tower');
-  $('#game-container').append($middle);
+  $left = $('<div>')
+    .addClass('left')
+    .addClass('tower')
+    .appendTo($gameContainer),
 
-  var $right = $('<div>');
-  $right.addClass('right');
-  $right.addClass('tower');
-  $('#game-container').append($right);
+  $middle = $('<div>')
+    .addClass('middle')
+    .addClass('tower')
+    .appendTo($gameContainer),
+
+  $right = $('<div>')
+    .addClass('right')
+    .addClass('tower')
+    .appendTo($gameContainer);
 
   // Make the discs
   for (var i=10; i>0; i--) {
-    var $disc = $('<div>');
-    $disc.addClass('disc');
-    $disc.addClass('disc' + i);
-    $disc.attr('id', i);
     var numDiscs = $left[0].children.length;
-    $disc.attr('style', 'bottom:' + numDiscs*20 + 'px;');
-    $left.append($disc);
+    $('<div>')
+      .addClass('disc')
+      .addClass('disc' + i)
+      .attr('id', i);
+      .attr('style', 'bottom:' + numDiscs*20 + 'px;')
+      .appendTo($left);
   }
 
 
-  // Init tower droppable ability
+  // Tower droppable ability
   $('.tower').droppable({
     drop: function(ev, ui) {
       $(ev['target']).removeClass('tower-focus');
@@ -36,13 +38,12 @@ $(function() {
           height = 0;
           console.log(numDiscs);
 
-      if (ev.target == ev.target.previousSibling || !ev.target.previousSibling) {
-        numDiscs -= 1;
-      }
-      if (numDiscs) {
-        height = (numDiscs*20) + 'px';
-      }
-      $(ui.draggable).detach().css({top: '', bottom: height, left: '0%'}).appendTo(this);
+      if (ev.target == window.pickupContainer) numDiscs -= 1;
+      if (numDiscs) height = (numDiscs*20) + 'px';
+
+      $(ui.draggable).detach()
+        .css({top: '', bottom: height, left: '0%'})
+        .appendTo(this);
     },
     over: function(ev, ui) {
       $(ev['target']).addClass('tower-focus');
@@ -53,12 +54,13 @@ $(function() {
     tolerance: 'touch'
   });
 
-  // Init disc draggable ability
+  // Disc draggable ability
   $('.disc').draggable({
       start: function(event, ui) {
         startPos = ui.helper.position();
-        console.log(startPos);
-        $(ui.helper).css('margin-left', event.clientX - $(event.target).offset().left + 88);
+        console.log('start-position', startPos);
+        $(ui.helper).css('margin-left',
+          event.clientX - $(event.target).offset().left + 88);
         $(ui.helper).css('left', '');
         $(ui.helper).css('right', '');
       },
@@ -68,16 +70,17 @@ $(function() {
         $(ui.helper).css('right', '0%');
       },
       revert: function(event, ui) {
-          $(this).data('uiDraggable').originalPosition = {
-              top : startPos.top,
-              left: 0
+        $(this).data('uiDraggable')
+          .originalPosition = {
+            top : startPos.top,
+            left: 0
           };
-          return !event;
+        return !event;
       }
   });
 
 
-
+  // ensures that only the top disc is picked up
   function onlyEnableTopDiscs() {
     var $discs = $('.disc');
     for (var i=0; i<$discs.length; i++) {
@@ -103,6 +106,7 @@ $(function() {
     }
   }
 
+  // ensures larger discs cannot be placed on top of their smaller bros
   // Disable towers with a smaller disc than the one being held
   $('body').on('mousedown', '.disc', function() {
     var discSize = $(this).attr('id'),
@@ -123,14 +127,13 @@ $(function() {
 
         var towerCapacity = childrenSize[0];
         if (parseInt(towerCapacity) < parseInt(discSize)) {
-          console.log('disabling ' + i);
           $($towers[i]).droppable('disable');
         }
       }
     }
   });
 
-  // enable all towers droppable on mouseup
+  // enables all towers droppable on mouseup
   $('body').on('mouseup', function(e) {
     setTimeout(function() {
       var $towers = $('.tower');
@@ -147,13 +150,19 @@ $(function() {
 
   // lock scroll position
   var scrollPosition = [
-    self.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
-    self.pageYOffset || document.documentElement.scrollTop  || document.body.scrollTop
+    self.pageXOffset
+      || document.documentElement.scrollLeft
+      || document.body.scrollLeft,
+    self.pageYOffset
+      || document.documentElement.scrollTop
+      || document.body.scrollTop
   ];
-  var html = jQuery('html'); // it would make more sense to apply this to body, but IE7 won't have that
-  html.data('scroll-position', scrollPosition);
-  html.data('previous-overflow', html.css('overflow'));
-  html.css('overflow', 'hidden');
+
+  $('html')
+    .data('scroll-position', scrollPosition);
+    .data('previous-overflow', html.css('overflow'))
+    .css('overflow', 'hidden');
+
   window.scrollTo(scrollPosition[0], scrollPosition[1]);
 
 });
