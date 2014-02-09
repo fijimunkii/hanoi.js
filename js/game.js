@@ -54,21 +54,21 @@ $(function() {
   });
 
   // Init disc draggable ability
-  $(".disc").draggable({
+  $('.disc').draggable({
       start: function(event, ui) {
         startPos = ui.helper.position();
         console.log(startPos);
-        $(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left + 88);
-        $(ui.helper).css("left", '');
-        $(ui.helper).css("right", '');
+        $(ui.helper).css('margin-left', event.clientX - $(event.target).offset().left + 88);
+        $(ui.helper).css('left', '');
+        $(ui.helper).css('right', '');
       },
       stop: function(event, ui) {
-        $(ui.helper).css("margin-left", "");
-        $(ui.helper).css("left", '0%');
-        $(ui.helper).css("right", '0%');
+        $(ui.helper).css('margin-left', '');
+        $(ui.helper).css('left', '0%');
+        $(ui.helper).css('right', '0%');
       },
       revert: function(event, ui) {
-          $(this).data("uiDraggable").originalPosition = {
+          $(this).data('uiDraggable').originalPosition = {
               top : startPos.top,
               left: 0
           };
@@ -123,7 +123,7 @@ $(function() {
 
         var towerCapacity = childrenSize[0];
         if (parseInt(towerCapacity) < parseInt(discSize)) {
-          console.log("disabling " + i);
+          console.log('disabling ' + i);
           $($towers[i]).droppable('disable');
         }
       }
