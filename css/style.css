@@ -5,16 +5,15 @@ body {
 }
 
 #game-container {
-  width: 670px;
-  margin: 100px auto;
 }
 
 .tower {
-  width: 202px;
-  height: 222px;
+  width: 300px;
+  height: 600px;
   float: left;
   margin: 10px;
-  background: green;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, .25);
   position: relative;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -25,13 +24,13 @@ body {
 }
 
 .tower-focus {
-  background: #1AFF00;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .disc {
   height: 20px;
   margin: 0 auto;
-  border: 1px solid green;
+  border: 1px solid rgba(0, 0, 0, 0.4);
   position: absolute;
   left: 0%;
   right: 0%;
@@ -42,54 +41,67 @@ body {
   user-select: none;
   -webkit-user-drag: none;
   user-drag: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .disc1 {
-  width: 20px;
-  background: yellow;
-}
-
-.disc2 {
-  width: 40px;
-  background: orange;
-}
-
-.disc3 {
   width: 60px;
   background: yellow;
 }
 
-.disc4 {
+.disc2 {
   width: 80px;
   background: orange;
 }
 
-.disc5 {
+.disc3 {
   width: 100px;
   background: yellow;
 }
 
-.disc6 {
+.disc4 {
   width: 120px;
   background: orange;
 }
 
-.disc7 {
+.disc5 {
   width: 140px;
   background: yellow;
 }
 
-.disc8 {
+.disc6 {
   width: 160px;
   background: orange;
 }
 
-.disc9 {
+.disc7 {
   width: 180px;
   background: yellow;
 }
 
-.disc10 {
+.disc8 {
   width: 200px;
+  background: orange;
+}
+
+.disc9 {
+  width: 220px;
+  background: yellow;
+}
+
+.disc10 {
+  width: 240px;
+  background: orange;
+}
+
+.disc11 {
+  width: 260px;
+  background: yellow;
+}
+
+.disc12 {
+  width: 280px;
   background: orange;
 }

@@ -19,12 +19,12 @@ $(function() {
     .appendTo($gameContainer);
 
   // Make the discs
-  for (var i=10; i>0; i--) {
+  for (var i=12; i>0; i--) {
     var numDiscs = $left[0].children.length;
     $('<div>')
       .addClass('disc')
       .addClass('disc' + i)
-      .attr('id', i);
+      .attr('id', i)
       .attr('style', 'bottom:' + numDiscs*20 + 'px;')
       .appendTo($left);
   }
@@ -36,7 +36,6 @@ $(function() {
       $(ev['target']).removeClass('tower-focus');
       var numDiscs = ev['target'].children.length,
           height = 0;
-          console.log(numDiscs);
 
       if (ev.target == window.pickupContainer) numDiscs -= 1;
       if (numDiscs) height = (numDiscs*20) + 'px';
@@ -56,20 +55,22 @@ $(function() {
 
   // Disc draggable ability
   $('.disc').draggable({
-      start: function(event, ui) {
+      start: function(ev, ui) {
         startPos = ui.helper.position();
-        console.log('start-position', startPos);
-        $(ui.helper).css('margin-left',
-          event.clientX - $(event.target).offset().left + 88);
-        $(ui.helper).css('left', '');
-        $(ui.helper).css('right', '');
+        window.pickupContainer = ui.helper.parent()[0];
+        $(ui.helper)
+          .css('margin-left',
+            event.clientX - $(event.target).offset().left + 100)
+          .css('left', '')
+          .css('right', '');
       },
-      stop: function(event, ui) {
-        $(ui.helper).css('margin-left', '');
-        $(ui.helper).css('left', '0%');
-        $(ui.helper).css('right', '0%');
+      stop: function(ev, ui) {
+        $(ui.helper)
+          .css('margin-left', '')
+          .css('left', '0%')
+          .css('right', '0%');
       },
-      revert: function(event, ui) {
+      revert: function(ev, ui) {
         $(this).data('uiDraggable')
           .originalPosition = {
             top : startPos.top,
@@ -157,12 +158,10 @@ $(function() {
       || document.documentElement.scrollTop
       || document.body.scrollTop
   ];
-
-  $('html')
-    .data('scroll-position', scrollPosition);
-    .data('previous-overflow', html.css('overflow'))
-    .css('overflow', 'hidden');
-
+  var html = jQuery('html')
+  html.data('scroll-position', scrollPosition);
+  html.data('previous-overflow', html.css('overflow'));
+  html.css('overflow', 'hidden');
   window.scrollTo(scrollPosition[0], scrollPosition[1]);
 
 });
