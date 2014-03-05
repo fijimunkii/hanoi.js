@@ -1,5 +1,11 @@
 $(function() {
 
+  // Detect Firefox/Gecko
+  var FF = !(window.mozInnerScreenX == null);
+
+  // Detect Internet Explorer
+  var IE = /*@cc_on!@*/false;
+
   // Make the towers
   var $gameContainer = $('#game-container'),
 
@@ -58,11 +64,18 @@ $(function() {
       start: function(ev, ui) {
         startPos = ui.helper.position();
         window.pickupContainer = ui.helper.parent()[0];
-        $(ui.helper)
-          .css('margin-left',
-            event.clientX - $(event.target).offset().left + 100)
-          .css('left', '')
-          .css('right', '');
+        if (FF) {
+          $(ui.helper)
+            .css('margin-left', '')
+            .css('left', '')
+            .css('right', '');
+        } else {
+          $(ui.helper)
+            .css('margin-left',
+              ev.clientX - $(ev.target).offset().left + 100)
+            .css('left', '')
+            .css('right', '');          
+        }
       },
       stop: function(ev, ui) {
         $(ui.helper)
@@ -76,7 +89,7 @@ $(function() {
             top : startPos.top,
             left: 0
           };
-        return !event;
+        return !ev;
       }
   });
 
